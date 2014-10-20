@@ -169,6 +169,7 @@ void draw()
     refresh();
 }
 
+// Takes user input to redraw map with moved character
 void input()
 {
     bool loop = true;
@@ -215,7 +216,7 @@ void input()
     draw();
 }
 
-
+// Simple movement algorithm with embedded collision detection
 void movmt(int x, int y)
 {
 	player.x = player.x + x;
