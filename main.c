@@ -2,10 +2,10 @@
 #include <time.h>
 #include <ncurses.h>
 
-#define MAP_WIDTH 79
-#define MAP_HEIGHT 23
+#define MAP_WIDTH 150
+#define MAP_HEIGHT 50
 #define ADJ_MAX 4
-#define NUMBER_OF_ITERATIONS 5
+#define NUMBER_OF_ITERATIONS 75
 
 void genMap();
 void encloseMap();
@@ -48,50 +48,7 @@ int main()
 	refresh();
     
     // The main loop of the game (should be moved to its own function)
-<<<<<<< Updated upstream
-    bool loop = true;
-    int c;
-    while(loop)
-    {
-        // Take keyboard input and assigns its value to c
-        c = getch();
-        
-        // Switch containing all the possible actions pertaining to each key
-        switch (c) {
-            case KEY_UP:
-                player.y = player.y - 1;
-                break;
-                
-            case KEY_DOWN:
-                player.y = player.y + 1;
-                break;
-                
-            case KEY_LEFT:
-                player.x = player.x - 1;
-                break;
-                
-            case KEY_RIGHT:
-                player.x = player.x + 1;
-                break;
-                
-            case 'i':
-                iterateAutomata();
-                break;
-                
-            case 'Q':
-                loop = false;
-                break;
-                
-            default:
-                break;
-        }
-
-        // Draw the updated world
-        draw();
-    }
-=======
     input();
->>>>>>> Stashed changes
     
     // Close NCurses
 	endwin();
