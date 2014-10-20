@@ -1,31 +1,38 @@
+// API Inclusions
 #include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
 
+// Definitions
 #define MAP_WIDTH 150
 #define MAP_HEIGHT 50
 #define ADJ_MAX 4
 #define NUMBER_OF_ITERATIONS 75
 
+// Function Calls
 void genMap();
 void encloseMap();
 void randomFillMap();
 void iterateAutomata();
-int countSurroundingSolids();
 void draw();
 void movmt();
 void input();
 
+// Struct Creation
 struct point {
     int x;
     int y;
 };
-
 struct point player = {5, 5};
 
+// Character Init
 char map[MAP_WIDTH][MAP_HEIGHT];
+
+// Integer Init
+int countSurroundingSolids();
 int movement = 1;
 
+// Main Function
 int main()
 {
     // Initialize NCurses
@@ -55,7 +62,6 @@ int main()
     // Close Program
 	return 0;
 }
-
 
 // Generates the map
 void genMap()
@@ -221,7 +227,7 @@ void movmt(int x, int y)
 {
 	player.x = player.x + x;
 	player.y = player.y + y;
-    
+    // Collision detection here
     if (map[player.x][player.y] == 'X')
     {
         player.y = player.y - y;
