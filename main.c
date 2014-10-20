@@ -18,13 +18,16 @@ void draw();
 void movmt();
 void input();
 void dig();
+void levelBridge();
 
 // Struct Creation
 struct point {
     int x;
     int y;
 };
-struct point player = {5, 5};
+struct point player = {0, 5};
+
+	
 
 // Character Init
 char map[MAP_WIDTH][MAP_HEIGHT];
@@ -42,7 +45,7 @@ int main()
 	initscr();
     // Prevent NCurses from displaying keyboard input
     noecho();
-    // Start Color
+    // Allow color tiles and Characters
     start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_BLACK, COLOR_GREEN);
@@ -54,17 +57,13 @@ int main()
     // Initializes random number generator
     time_t t;
     srand((unsigned) time(&t));
-    
     // Generate the map
     genMap();
-    
     // Initial draw/refresh before the game enters the main loop
 	draw();
 	refresh();
-    
     // The main loop of the game (should be moved to its own function)
     input();
-    
     // Close NCurses
 	endwin();
     // Close Program
@@ -197,6 +196,7 @@ void draw()
 // Takes user input to redraw map with moved character
 void input()
 {
+	levelBridge();
     bool loop = true;
     int c;
     
@@ -284,11 +284,26 @@ void input()
     draw();
 }
 
+// Creates new level upon reaching right side (placed in movement and dig functions)
+void levelBridge(xpos)
+{
+	if(xpos == (MAP_WIDTH - 1))
+	{
+		player.x = 0;
+		player.y = player.y;
+		main();
+		
+		
+	}
+		
+}
+
 // Simple movement algorithm with embedded collision detection
 void movmt(int x, int y)
 {
 	player.x = player.x + x;
 	player.y = player.y + y;
+	levelBridge(player.x);
     // Collision detection here
     if (map[player.x][player.y] == 'X')
     {
@@ -308,5 +323,7 @@ void dig(int x, int y)
     {
         map[player.x][player.y] = '.';
     }
+    levelBridge(player.x);
     draw();
 }
+
