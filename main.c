@@ -20,6 +20,7 @@ void input();
 void dig();
 void levelBridge();
 
+
 // Struct Creation
 struct point {
     int x;
@@ -285,7 +286,7 @@ void input()
 }
 
 // Creates new level upon reaching right side (placed in movement and dig functions)
-void levelBridge(xpos)
+void levelBridge(xpos, ypos)
 {
 	if(xpos == (MAP_WIDTH - 1))
 	{
@@ -295,6 +296,12 @@ void levelBridge(xpos)
 		
 		
 	}
+	if(ypos == (MAP_HEIGHT -1))
+	{
+		player.y = 0;
+		player.x = player.x;
+		main();
+		}
 		
 }
 
@@ -303,7 +310,7 @@ void movmt(int x, int y)
 {
 	player.x = player.x + x;
 	player.y = player.y + y;
-	levelBridge(player.x);
+	levelBridge(player.x, player.y);
     // Collision detection here
     if (map[player.x][player.y] == 'X')
     {
@@ -323,7 +330,7 @@ void dig(int x, int y)
     {
         map[player.x][player.y] = '.';
     }
-    levelBridge(player.x);
+    levelBridge(player.x,player.y);
     draw();
 }
 
