@@ -15,6 +15,7 @@ int countSurroundingSolids();
 void draw();
 void movmt();
 void input();
+void pathGenerator();
 
 struct point {
     int x;
@@ -68,6 +69,7 @@ void genMap()
     }
     
     encloseMap();
+    pathGenerator();
 }
 
 // Randomly fill the inside of the map with walls
@@ -230,3 +232,19 @@ void movmt(int x, int y)
        draw();
 }
 
+void pathGenerator()
+{
+	for(int x = 0; x <= MAP_WIDTH; x++)
+	{
+		for(int y = 0; y <= MAP_HEIGHT; y++)
+		{
+			if(rand() > RAND_MAX/3 && map[x+3][y] == 'X')
+			{
+				map[x][y] = 'O';
+			}
+		}
+	}
+draw();
+		
+}
+	
