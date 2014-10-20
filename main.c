@@ -173,10 +173,14 @@ void input()
 {
     bool loop = true;
     int c;
+    
     while(loop)
     {
+        
         // Take keyboard input and assigns its value to c
         c = getch();
+        
+    
         
         // Switch containing all the possible actions pertaining to each key
         switch (c) {
@@ -201,8 +205,14 @@ void input()
                 
             default:
                 break;
+                
         }
+       
+        
+        
+    
     }
+    draw();
 }
 
 
@@ -210,6 +220,12 @@ void movmt(int x, int y)
 {
 	player.x = player.x + x;
 	player.y = player.y + y;
-    draw();
+    
+    if (map[player.x][player.y] == 'X')
+    {
+        player.y = player.y - y;
+        player.x = player.x - x;
+    }
+       draw();
 }
 
