@@ -15,49 +15,67 @@ struct point player = {5, 5};
 char map[MAP_WIDTH][MAP_HEIGHT];
 
 int main()
-{	
+{
+    // Initialize NCurses
 	initscr();
+    // Prevent NCurses from displaying keyboard input
     noecho();
+    // Hide the terminal cursor
     curs_set(0);
+    // Allow the use of arrow keys on Mac OS X
+    keypad(stdscr, TRUE);
     
+    // Generate the map
     genMap();
     
+    // Initial draw/refresh before the game enters the main loop
 	draw();
 	refresh();
     
+    // The main loop of the game (should be moved to its own function)
     bool loop = true;
-    char c;
+    int c;
     while(loop)
     {
+        // Take keyboard input and assigns its value to c
         c = getch();
-        if(c == 'h')
-        {
-            player.x = player.x - 1;
+        
+        // Switch containing all the possible actions pertaining to each key
+        switch (c) {
+            case KEY_UP:
+                player.y = player.y - 1;
+                break;
+                
+            case KEY_DOWN:
+                player.y = player.y + 1;
+                break;
+                
+            case KEY_LEFT:
+                player.x = player.x - 1;
+                break;
+                
+            case KEY_RIGHT:
+                player.x = player.x + 1;
+                break;
+                
+            case 'Q':
+                loop = false;
+                
+            default:
+                break;
         }
-        else if(c == 'j')
-        {
-            player.y = player.y + 1;
-        }
-        else if(c == 'k')
-        {
-            player.y = player.y - 1;
-        }
-        else if(c == 'l')
-        {
-            player.x = player.x + 1;
-        }
-        else if(c == 'Q')
-        {
-            loop = false;
-        }
+
+        // Draw the updated world
         draw();
-        refresh();
     }
     
+    // Close NCurses
 	endwin();
+    // Close Program
 	return 0;
 }
 
+// Generates the map
 void genMap()
 {
 	for(int x = 0; x <= MAP_WIDTH; x++)
@@ -76,9 +94,10 @@ void genMap()
 	}
 }
 
+// Draws the world to the screen
 void draw()
 {
-    // draw map
+    // Draw map
     for(int x = 0; x <= MAP_WIDTH; x++)
 	{
 		for(int y = 0; y <= MAP_HEIGHT; y++)
@@ -87,7 +106,10 @@ void draw()
 		}
 	}
     
-    // draw player
+    // Draw player
     mvprintw(player.y, player.x, "@");
     
+    
+    // Draw changes to the screen
+    refresh();
 }
