@@ -93,7 +93,6 @@ void randomFillMap()
 		{
             if(rand() > RAND_MAX/2)
             {
-            	attron(COLOR_PAIR(1));
                 map[x][y] = 'X';
             }
             else
