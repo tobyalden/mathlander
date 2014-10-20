@@ -6,18 +6,55 @@
 void genMap();
 void draw();
 
+struct point {
+    int x;
+    int y;
+};
+
+struct point player = {5, 5};
 char map[MAP_WIDTH][MAP_HEIGHT];
 
 int main()
 {	
 	initscr();
-
+    noecho();
+    curs_set(0);
+    
     genMap();
+    
 	draw();
 	refresh();
-	getch();
+    
+    bool loop = true;
+    char c;
+    while(loop)
+    {
+        c = getch();
+        if(c == 'h')
+        {
+            player.x = player.x - 1;
+        }
+        else if(c == 'j')
+        {
+            player.y = player.y + 1;
+        }
+        else if(c == 'k')
+        {
+            player.y = player.y - 1;
+        }
+        else if(c == 'l')
+        {
+            player.x = player.x + 1;
+        }
+        else if(c == 'Q')
+        {
+            loop = false;
+        }
+        draw();
+        refresh();
+    }
+    
 	endwin();
-
 	return 0;
 }
 
@@ -41,11 +78,16 @@ void genMap()
 
 void draw()
 {
+    // draw map
     for(int x = 0; x <= MAP_WIDTH; x++)
 	{
 		for(int y = 0; y <= MAP_HEIGHT; y++)
 		{
-			mvprintw(x, y, "%c", map[x][y]);
+			mvprintw(y, x, "%c", map[x][y]);
 		}
 	}
+    
+    // draw player
+    mvprintw(player.y, player.x, "@");
+    
 }
