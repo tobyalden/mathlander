@@ -13,6 +13,8 @@ void randomFillMap();
 void iterateAutomata();
 int countSurroundingSolids();
 void draw();
+void movmt();
+void input();
 
 struct point {
     int x;
@@ -20,7 +22,9 @@ struct point {
 };
 
 struct point player = {5, 5};
+
 char map[MAP_WIDTH][MAP_HEIGHT];
+int movement = 1;
 
 int main()
 {
@@ -44,6 +48,7 @@ int main()
 	refresh();
     
     // The main loop of the game (should be moved to its own function)
+<<<<<<< Updated upstream
     bool loop = true;
     int c;
     while(loop)
@@ -84,6 +89,9 @@ int main()
         // Draw the updated world
         draw();
     }
+=======
+    input();
+>>>>>>> Stashed changes
     
     // Close NCurses
 	endwin();
@@ -203,3 +211,48 @@ void draw()
     // Draw changes to the screen
     refresh();
 }
+
+void input()
+{
+    bool loop = true;
+    int c;
+    while(loop)
+    {
+        // Take keyboard input and assigns its value to c
+        c = getch();
+        
+        // Switch containing all the possible actions pertaining to each key
+        switch (c) {
+            case KEY_UP:
+                movmt(0, -movement);
+                break;
+                
+            case KEY_DOWN:
+                movmt(0, movement);
+                break;
+                
+            case KEY_LEFT:
+                movmt(-movement, 0);
+                break;
+                
+            case KEY_RIGHT:
+                movmt(movement, 0);
+                break;
+                
+            case 'Q':
+                loop = false;
+                
+            default:
+                break;
+        }
+    }
+}
+
+
+void movmt(int x, int y)
+{
+	player.x = player.x + x;
+	player.y = player.y + y;
+    draw();
+}
+
