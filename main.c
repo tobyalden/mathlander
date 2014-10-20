@@ -17,6 +17,7 @@ void iterateAutomata();
 void draw();
 void movmt();
 void input();
+void dig();
 
 // Struct Creation
 struct point {
@@ -236,3 +237,5 @@ void movmt(int x, int y)
        draw();
 }
 
+//Allows user to dig through islands
+void dig();
