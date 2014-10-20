@@ -27,7 +27,14 @@ void genMap()
 	{
 		for(int y = 0; y <= MAP_HEIGHT; y++)
 		{
-			map[x][y] = 'A';
+            if(x == 0 || y == 0 || x == MAP_WIDTH || y  == MAP_HEIGHT)
+            {
+                map[x][y] = 'X';
+            }
+            else
+            {
+                map[x][y] = '.';
+            }
 		}
 	}
 }
