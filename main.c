@@ -28,10 +28,12 @@ struct point player = {5, 5};
 
 // Character Init
 char map[MAP_WIDTH][MAP_HEIGHT];
+char digon = 'n';
 
 // Integer Init
 int countSurroundingSolids();
 int movement = 1;
+
 
 // Main Function
 int main()
@@ -191,23 +193,66 @@ void input()
     
         
         // Switch containing all the possible actions pertaining to each key
+        // Now with dig functionality. Should put digon within a structure for different...
+        // ... actions so that we can have more than one and don't need to add if ...
+        // ... statements up the yin yang. 
+        
+        
         switch (c) {
             case KEY_UP:
-                movmt(0, -movement);
+                if(digon == 'n')
+                {
+                	movmt(0, -movement);
+                }
+                if(digon == 'y')
+                {
+                	dig(0, -movement);
+                }
                 break;
                 
             case KEY_DOWN:
-                movmt(0, movement);
+            	if(digon == 'n')
+            	{
+                	movmt(0, movement);
+                }
+                if(digon == 'y')
+                {
+                	dig(0, movement);
+                	}
                 break;
                 
-            case KEY_LEFT:
-                movmt(-movement, 0);
+            case KEY_LEFT: 
+         		if(digon == 'n')
+            	{
+                	movmt(-movement, 0);
+                }
+                if(digon == 'y')
+                {
+                	dig(-movement, 0);
+                	}
                 break;
                 
             case KEY_RIGHT:
-                movmt(movement, 0);
+                if(digon == 'n')
+            	{
+                	movmt(movement, 0);
+                }
+                if(digon == 'y')
+                {
+                	dig(movement, 0);
+                	}
                 break;
                 
+            case 'd':
+            	switch(digon){
+            	case 'y':
+            		digon = 'n';
+            		break;
+            	case 'n':
+            		digon = 'y';
+            		break;
+            		}
+                break;
             case 'Q':
                 loop = false;
                 
@@ -234,8 +279,18 @@ void movmt(int x, int y)
         player.y = player.y - y;
         player.x = player.x - x;
     }
-       draw();
+    draw();
 }
 
-//Allows user to dig through islands
-void dig();
+// When digon = 'y' and user activates via 'd', user to digs through islands
+void dig(int x, int y)
+{
+	player.x = player.x + x;
+	player.y = player.y + y;
+    // Collision detection here
+    if (map[player.x][player.y] == 'X')
+    {
+        map[player.x][player.y] = '.';
+    }
+    draw();
+}
