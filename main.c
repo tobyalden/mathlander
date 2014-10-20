@@ -5,6 +5,17 @@
 
 void genMap();
 void draw();
+void move()
+
+
+struct characterPosition {
+    characterX;
+    characterY;
+};
+
+void initChar();
+void moveChar();
+
 
 char map[MAP_WIDTH][MAP_HEIGHT];
 
@@ -14,6 +25,7 @@ int main()
 
     genMap();
 	draw();
+    move()
 	refresh();
 	getch();
 	endwin();
@@ -48,4 +60,17 @@ void draw()
 			mvprintw(x, y, "%c", map[x][y]);
 		}
 	}
+    mvprintw(characterPosition.characterX, characterPosition.characterY, "@")
+}
+
+
+void move()
+{
+    inp = getch("Enter: ")
+    if (inp == "a")
+    {
+        characterPosition.characterY = characterPosition.characterY + 1;
+    }
+    
+    
 }
