@@ -42,6 +42,11 @@ int main()
 	initscr();
     // Prevent NCurses from displaying keyboard input
     noecho();
+    // Start Color
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_BLACK, COLOR_GREEN);
+    init_pair(3, COLOR_BLUE, COLOR_BLUE);
     // Hide the terminal cursor
     curs_set(0);
     // Allow the use of arrow keys on Mac OS X
@@ -88,6 +93,7 @@ void randomFillMap()
 		{
             if(rand() > RAND_MAX/2)
             {
+            	attron(COLOR_PAIR(1));
                 map[x][y] = 'X';
             }
             else
@@ -166,12 +172,23 @@ void draw()
 	{
 		for(int y = 0; y <= MAP_HEIGHT; y++)
 		{
-			mvprintw(y, x, "%c", map[x][y]);
+			if (map[x][y] == 'X')
+			{
+				attron(COLOR_PAIR(1));
+				mvprintw(y, x, "%c", map[x][y]);
+				}
+			else if (map[x][y]=='.')
+			{
+				attron(COLOR_PAIR(3));
+				mvprintw(y, x, "%c", map[x][y]);
+				}
 		}
 	}
     
     // Draw player
+    attron(COLOR_PAIR(2));
     mvprintw(player.y, player.x, "@");
+    
     
     
     // Draw changes to the screen
