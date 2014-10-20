@@ -1,6 +1,6 @@
 #include <ncurses.h>
 
-// penis
+// penis dong
 
 #define MAP_WIDTH 10
 #define MAP_HEIGHT 10
