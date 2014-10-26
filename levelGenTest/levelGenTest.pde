@@ -108,6 +108,9 @@ int countSurroundingSolids(int x, int y, int radius) {
 
 void draw()
 {
+  
+  // noStroke();
+  
   // draw map
   for (int x = 0; x <= MAP_WIDTH - 1; x++) {
     for (int y = 0; y <= MAP_HEIGHT - 1; y++) {

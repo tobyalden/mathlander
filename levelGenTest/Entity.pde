@@ -21,19 +21,51 @@ class Entity {
       velocity.normalize();
       velocity.mult(MAX_VELOCITY);
     }
-
+    
     position.x += velocity.x;
-
-    int cellSize = levelGenTest.CELL_SIZE;
-    //Rectangle mapRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
-
-    for (int x = 0; x < MAP_WIDTH; x++) {
-      for (int y = 0; y < MAP_HEIGHT; y++) {
-        Rectangle mapRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
-      }
+    if(isColliding() != null)
+    {
+      Rectangle mapRect = isColliding();
+     if(velocity.x > 0)
+     {
+      position.x = mapRect.x - levelGenTest.CELL_SIZE;
+     }
+     else if(velocity.x < 0)
+     {
+       position.x = mapRect.x + levelGenTest.CELL_SIZE;
+     }
     }
 
     position.y += velocity.y;
+    if(isColliding() != null)
+    {
+      Rectangle mapRect = isColliding();
+     if(velocity.y > 0)
+     {
+      position.y = mapRect.y - levelGenTest.CELL_SIZE;
+     }
+     else if(velocity.y < 0)
+     {
+       position.y = mapRect.y + levelGenTest.CELL_SIZE;
+     }
+    }
+  }
+  
+  public Rectangle isColliding()
+  {
+    int cellSize = levelGenTest.CELL_SIZE;
+    Rectangle playerRect = new Rectangle(floor(position.x), floor(position.y), cellSize, cellSize);
+
+    for (int x = 0; x < levelGenTest.MAP_WIDTH; x++) {
+      for (int y = 0; y < levelGenTest.MAP_HEIGHT; y++) {
+        Rectangle mapRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
+        if(map[x][y] == CELL_WALL && playerRect.intersects(mapRect))
+        {
+          return mapRect;
+        }
+      }
+    } 
+    return null;
   }
 
   public PVector getPosition()
