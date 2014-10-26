@@ -1,22 +1,40 @@
 // Size of individual cells, in pixels
+<<<<<<< Updated upstream
 public static final int CELL_SIZE = 10;
 // Size of total map, in cells
 public static final int MAP_WIDTH = 64;
 public static final int MAP_HEIGHT = 48;
+=======
+final int CELL_SIZE = 6;
+// Size of total map, in cells
+final int MAP_WIDTH = 200;
+final int MAP_HEIGHT = 200;
+>>>>>>> Stashed changes
 // Size of the game window, in pixels
 public static final int WINDOW_WIDTH = CELL_SIZE * MAP_WIDTH;
 public static final int WINDOW_HEIGHT = CELL_SIZE * MAP_HEIGHT;
 
+<<<<<<< Updated upstream
 public static final int CELL_FLOOR = 0;
 public static final int CELL_WALL = 1;
+=======
+final int CELL_LAND = 0;
+final int CELL_OCEAN = 1;
+final int CELL_SHORE = 2;
+>>>>>>> Stashed changes
 
 public static final float FILL_PERCENT = 0.33;
 public static final int NUMBER_OF_STEPS = round(MAP_WIDTH * MAP_HEIGHT * FILL_PERCENT);
 
 public boolean key_Up, key_Down, key_Left, key_Right = false;
 
+<<<<<<< Updated upstream
 private int map[][];
 private Entity player;
+=======
+int map[][];
+PVector player1;
+>>>>>>> Stashed changes
 
 void setup()
 {
@@ -34,9 +52,15 @@ void generateMap_DrunkardsWalk()
 
   // initialize all map cells to walls
   map = new int[MAP_WIDTH][MAP_HEIGHT];
+<<<<<<< Updated upstream
   for (int x = 0; x < MAP_WIDTH; x++) {
     for (int y = 0; y < MAP_HEIGHT; y++) {
       map[x][y] = CELL_WALL;
+=======
+  for (int x = 0; x <= MAP_WIDTH - 1; x++) {
+    for (int y = 0; y <= MAP_HEIGHT - 1; y++) {
+      map[x][y] = CELL_OCEAN;
+>>>>>>> Stashed changes
     }
   }
 
@@ -44,7 +68,11 @@ void generateMap_DrunkardsWalk()
   PVector drunkard = new PVector(round(MAP_WIDTH/4), round(MAP_HEIGHT/4));
 
   // turn the selected map cell into floor
+<<<<<<< Updated upstream
   map[int(drunkard.x)][int(drunkard.y)] = CELL_FLOOR;
+=======
+  map[int(drunkard.x)][int(drunkard.y)] = CELL_LAND;
+>>>>>>> Stashed changes
 
   // while insufficient cells have been turned into floor
   while (numberOfSteps > 0)
@@ -66,6 +94,7 @@ void generateMap_DrunkardsWalk()
     }
 
     // if the new map cell is wall
+<<<<<<< Updated upstream
     if (map[int(drunkard.x)][int(drunkard.y)] == CELL_WALL)
     {
       // set the new map cell to floor
@@ -73,6 +102,15 @@ void generateMap_DrunkardsWalk()
       numberOfSteps--;
     }
   }
+=======
+    if (map[int(drunkard.x)][int(drunkard.y)] == CELL_OCEAN)
+    {
+      map[int(drunkard.x)][int(drunkard.y)] = CELL_LAND;
+      numberOfSteps--;
+    }
+  }
+  createShoreline();
+>>>>>>> Stashed changes
 }
 
 void iterateAutomata() {
@@ -81,9 +119,22 @@ void iterateAutomata() {
     for (int y = 0; y <= MAP_HEIGHT - 1; y++) {
       int adjCount = countSurroundingSolids(x, y, 1);
       if (adjCount >= 5) {
+<<<<<<< Updated upstream
         map[x][y] = CELL_FLOOR;
       } else {
         map[x][y] = CELL_WALL;
+=======
+        map[x][y] = CELL_LAND;
+      } else {
+        map[x][y] = CELL_OCEAN;
+      }
+
+      for (int xScan = -1; xScan <= 1; xScan++) {
+        for (int yScan = -1; yScan <= 1; yScan++) {
+          if (x + xScan > 0 && x + xScan < MAP_WIDTH && y + yScan > 0 && y + yScan < MAP_HEIGHT && map[x + xScan][y + yScan] == CELL_OCEAN && map[x][y] == CELL_LAND)
+            map[x][y] = CELL_SHORE;
+        }
+>>>>>>> Stashed changes
       }
     }
   }
@@ -96,7 +147,7 @@ int countSurroundingSolids(int x, int y, int radius) {
     if (xScan > 0 && xScan <= MAP_WIDTH - 1) {
       for (int yScan = y - radius; yScan <= y + radius; yScan++) {
         if (yScan > 0 && yScan <= MAP_HEIGHT - 1) {
-          if (!(map[xScan][yScan] == CELL_WALL)) {
+          if (!(map[xScan][yScan] == CELL_OCEAN)) {
             solidCount++;
           }
         }
@@ -108,6 +159,7 @@ int countSurroundingSolids(int x, int y, int radius) {
 
 void draw()
 {
+<<<<<<< Updated upstream
   
   // noStroke();
   
@@ -115,11 +167,23 @@ void draw()
   for (int x = 0; x <= MAP_WIDTH - 1; x++) {
     for (int y = 0; y <= MAP_HEIGHT - 1; y++) {
       if (map[x][y] == CELL_FLOOR)
+=======
+  noStroke();
+  for (int x = 0; x <= MAP_WIDTH - 1; x++) 
+  {
+    for (int y = 0; y <= MAP_HEIGHT - 1; y++) 
+    {
+      if (map[x][y] == CELL_SHORE)
       {
-        fill(0);
-      } else if (map[x][y] == CELL_WALL)
+        fill(0,0,255);
+      }
+      if (map[x][y] == CELL_LAND) 
+>>>>>>> Stashed changes
       {
-        fill(255);
+        fill(0,255,0);
+      } else if (map[x][y] == CELL_OCEAN)
+      {
+        fill(0,51,102);
       }
       rect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
@@ -174,6 +238,7 @@ void draw()
   fill(255, 0, 0);
   rect(player.getX(), player.getY(), CELL_SIZE, CELL_SIZE);
 }
+
 
 void keyPressed() {
   if (key == 'g' || key == 'G') {
@@ -230,6 +295,19 @@ int sign(float num)
   else 
   {
    return 0; 
+  }
+}
+
+void createShoreline() {
+  for (int x = 0; x <= MAP_WIDTH - 1; x++) {
+    for (int y = 0; y <= MAP_HEIGHT - 1; y++) {
+      for (int xScan = -1; xScan <= 1; xScan++) {
+        for (int yScan = -1; yScan <= 1; yScan++) {
+          if (x + xScan > 0 && x + xScan < MAP_WIDTH && y + yScan > 0 && y + yScan < MAP_HEIGHT && map[x + xScan][y + yScan] == CELL_OCEAN && map[x][y] == CELL_LAND)
+            map[x][y] = CELL_SHORE;
+        }
+      }
+    }
   }
 }
 
