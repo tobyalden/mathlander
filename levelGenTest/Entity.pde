@@ -59,7 +59,7 @@ class Entity {
     for (int x = 0; x < levelGenTest.MAP_WIDTH; x++) {
       for (int y = 0; y < levelGenTest.MAP_HEIGHT; y++) {
         Rectangle mapRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
-        if(map[x][y] == CELL_WALL && playerRect.intersects(mapRect))
+        if(map[x][y] == CELL_OCEAN && playerRect.intersects(mapRect))
         {
           return mapRect;
         }
